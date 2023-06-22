@@ -11,7 +11,8 @@ class Channel:
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__channel_id = channel_id
-        self.__channel = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,contentDetails,statistics').execute()
+        self.__channel = Channel.get_service().channels().list(id=self.__channel_id,
+                                                               part='snippet,contentDetails,statistics').execute()
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -57,4 +58,3 @@ class Channel:
                        'description': self.description, 'url': self.url,
                        'subscriberCount': self.subscriber_count, 'videoCount': self.video_count,
                        'viewCount': self.view_count}, f, ensure_ascii=False, indent=2)
-
