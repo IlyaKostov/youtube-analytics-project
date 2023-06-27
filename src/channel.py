@@ -14,6 +14,30 @@ class Channel:
         self.__channel = Channel.get_service().channels().list(id=self.__channel_id,
                                                                part='snippet,contentDetails,statistics').execute()
 
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        return self.subscriber_count - other.subscriber_count
+
+    def __lt__(self, other):
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        return self.subscriber_count <= other.subscriber_count
+
+    # def __gt__(self, other):
+    #     return self.subscriber_count > other.subscriber_count
+
+    # def __ge__(self, other):
+    #     return self.subscriber_count >= other.subscriber_count
+
+    # def __eq__(self, other):
+    #     return self.subscriber_count == other.subscriber_count
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         # youtube = build('youtube', 'v3', developerKey=YT_API_KEY)
@@ -42,15 +66,15 @@ class Channel:
 
     @property
     def subscriber_count(self):
-        return self.__channel['items'][0]['statistics']['subscriberCount']
+        return int(self.__channel['items'][0]['statistics']['subscriberCount'])
 
     @property
     def video_count(self):
-        return self.__channel['items'][0]['statistics']['videoCount']
+        return int(self.__channel['items'][0]['statistics']['videoCount'])
 
     @property
     def view_count(self):
-        return self.__channel['items'][0]['statistics']['viewCount']
+        return int(self.__channel['items'][0]['statistics']['viewCount'])
 
     def to_json(self, json_file):
         with open(json_file, 'w', encoding='utf-8') as f:
