@@ -29,14 +29,14 @@ class Channel:
     def __le__(self, other):
         return self.subscriber_count <= other.subscriber_count
 
-    # def __gt__(self, other):
-    #     return self.subscriber_count > other.subscriber_count
+    def __gt__(self, other):
+        return self.subscriber_count > other.subscriber_count
 
-    # def __ge__(self, other):
-    #     return self.subscriber_count >= other.subscriber_count
+    def __ge__(self, other):
+        return self.subscriber_count >= other.subscriber_count
 
-    # def __eq__(self, other):
-    #     return self.subscriber_count == other.subscriber_count
+    def __eq__(self, other):
+        return self.subscriber_count == other.subscriber_count
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
