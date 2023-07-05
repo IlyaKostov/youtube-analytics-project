@@ -8,7 +8,7 @@ class Video:
     def __init__(self, video_id):
         self.__video_id = video_id
         self.video = self.get_service().videos().list(id=self.__video_id,
-                                                               part='snippet,contentDetails,statistics').execute()
+                                                      part='snippet,contentDetails,statistics').execute()
         self.title = self.video['items'][0]['snippet']['title']
         self.url = f'https://youtu.be/{self.__video_id}'
         self.view_count = self.video['items'][0]['statistics']['viewCount']
