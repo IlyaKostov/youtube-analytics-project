@@ -7,7 +7,7 @@ from src.video import YT_API_KEY
 
 
 class PlayList:
-    __slots__ = ('playlist_id', 'channel_id', 'title', 'url')
+    __slots__ = ('playlist_id', 'title', 'url')
 
     def __init__(self, playlist_id):
         self.playlist_id = playlist_id
