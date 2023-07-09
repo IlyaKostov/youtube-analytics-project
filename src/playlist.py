@@ -11,15 +11,16 @@ class PlayList:
 
     def __init__(self, playlist_id):
         self.playlist_id = playlist_id
-        self.channel_id = self.get_playlist_videos()['items'][0]['snippet']['channelId']
+        playlists = self.get_service().playlists().list(id=self.playlist_id,
+                                                        part='contentDetails,snippet',
+                                                        maxResults=50,
+                                                        ).execute()
         self.url = f'https://www.youtube.com/playlist?list={self.playlist_id}'
-        for playlist in self.get_playlists()['items']:
-            if playlist['id'] == self.playlist_id:
-                self.title = playlist['snippet']['title']
+        self.title = playlists['items'][0]['snippet']['title']
 
     @property
     def total_duration(self):
-        total = datetime.timedelta(0)
+        total = datetime.timedelta()
         videos = self.get_videos()['items']
         for video in videos:
             iso_8601_duration = video['contentDetails']['duration']
@@ -37,12 +38,6 @@ class PlayList:
         return self.get_service().playlistItems().list(playlistId=self.playlist_id,
                                                        part='contentDetails, snippet',
                                                        maxResults=50).execute()
-
-    def get_playlists(self):
-        return self.get_service().playlists().list(channelId=self.channel_id,
-                                                   part='contentDetails,snippet',
-                                                   maxResults=50,
-                                                   ).execute()
 
     def get_videos(self):
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.get_playlist_videos()['items']]
